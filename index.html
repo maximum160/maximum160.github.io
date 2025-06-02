@@ -108,7 +108,6 @@
   </style>
 </head>
 <body>
-
   <h1>Hey Lesly! 💕<br>Ты пойдешь со мной на свидание в субботу или воскресенье?</h1>
 
   <button class="btn yes" id="yesBtn">Да 🥰</button>
@@ -119,54 +118,63 @@
   <div class="hearts" id="heartsContainer"></div>
 
   <script>
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const message = document.getElementById('message');
-    const heartsContainer = document.getElementById('heartsContainer');
-    const responseStatus = document.getElementById('responseStatus');
+    document.addEventListener("DOMContentLoaded", function () {
+      const noBtn = document.getElementById('noBtn');
+      const yesBtn = document.getElementById('yesBtn');
+      const message = document.getElementById('message');
+      const heartsContainer = document.getElementById('heartsContainer');
+      const responseStatus = document.getElementById('responseStatus');
 
-    function moveButtonRandomly(btn) {
-      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-      btn.style.left = x + 'px';
-      btn.style.top = y + 'px';
-    }
-
-    noBtn.addEventListener('mouseover', () => moveButtonRandomly(noBtn));
-    noBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      moveButtonRandomly(noBtn);
-    });
-
-    yesBtn.addEventListener('click', () => {
-      yesBtn.style.display = 'none';
-      noBtn.style.display = 'none';
-      message.style.display = 'block';
-      localStorage.setItem('leslyAnswer', 'yes');
-      spawnHearts();
-    });
-
-    function spawnHearts() {
-      for (let i = 0; i < 30; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = '100%';
-        heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        heartsContainer.appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
+      // Функция перемещения элемента на случайную позицию
+      function moveButtonRandomly(btn) {
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
       }
-    }
 
-    const savedAnswer = localStorage.getItem('leslyAnswer');
-    if (savedAnswer === 'yes') {
-      responseStatus.innerText = "✅ Lesly уже сказала ДА! 💘";
-      yesBtn.style.display = 'none';
-      noBtn.style.display = 'none';
-      message.style.display = 'block';
-      spawnHearts();
-    }
+      noBtn.addEventListener('mouseover', () => moveButtonRandomly(noBtn));
+      noBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        moveButtonRandomly(noBtn);
+      });
+
+      yesBtn.addEventListener('click', () => {
+        // Скрываем кнопки и показываем сообщение
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        message.style.display = 'block';
+        // Сохраняем в localStorage, чтобы при перезагрузке сразу показывать сообщение
+        localStorage.setItem('leslyAnswer', 'yes');
+        spawnHearts();
+      });
+
+      // Функция создания анимированных сердечек
+      function spawnHearts() {
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement('div');
+          heart.classList.add('heart');
+          heart.style.left = Math.random() * 100 + 'vw';
+          heart.style.top = '100%';
+          heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+          heartsContainer.appendChild(heart);
+          setTimeout(() => heart.remove(), 4000);
+        }
+      }
+
+      // Если ответ уже сохранён, сразу показываем сообщение и анимацию
+      const savedAnswer = localStorage.getItem('leslyAnswer');
+      if (savedAnswer === 'yes') {
+        responseStatus.innerText = "✅ Lesly уже сказала ДА! 💘";
+        yesBtn.style.display = 'none';
+        noBtn.style.display = 'none';
+        message.style.display = 'block';
+        spawnHearts();
+      }
+    });
   </script>
 
 </body>
 </html>
+
+
