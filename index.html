@@ -64,20 +64,11 @@
       display: none;
       z-index: 2;
     }
-    
+
     .response-status {
       margin-top: 20px;
       font-size: 1.1em;
       color: #6c757d;
-      z-index: 2;
-    }
-    
-    .notification {
-      margin-top: 10px;
-      font-size: 1.1em;
-      color: #007bff;
-      animation: fadeIn 1s ease-in-out;
-      display: none;
       z-index: 2;
     }
 
@@ -125,8 +116,16 @@
 
   <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
   <div class="response-status" id="responseStatus"></div>
-  <div class="notification" id="notification"></div>
   <div class="hearts" id="heartsContainer"></div>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
+  <script type="text/javascript">
+    // Initialize EmailJS with your User ID
+    (function(){
+      emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
+    })();
+  </script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -135,7 +134,6 @@
       const message = document.getElementById('message');
       const heartsContainer = document.getElementById('heartsContainer');
       const responseStatus = document.getElementById('responseStatus');
-      const notification = document.getElementById('notification');
 
       // Function to move a button to a random position
       function moveButtonRandomly(btn) {
@@ -152,19 +150,25 @@
       });
 
       yesBtn.addEventListener('click', () => {
-        // Hide buttons and show the message when "Yes" is clicked
+        // Hide the buttons and show the message
         yesBtn.style.display = 'none';
         noBtn.style.display = 'none';
         message.style.display = 'block';
-        // Save answer to localStorage to persist the state on reload
+        // Save the answer in localStorage to persist state across reloads
         localStorage.setItem('leslyAnswer', 'yes');
         spawnHearts();
 
-        // Simulate sending a reply (notification) to the sender after a short delay
-        setTimeout(() => {
-          notification.style.display = 'block';
-          notification.innerText = 'Notification: Answer received, Lesly said YES! 💌';
-        }, 1000);
+        // Send an email using EmailJS
+        emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+          to_email: "maximus942479@icloud.com",
+          subject: "Lesly Accepted Your Invite!",
+          message: "Lesly said YES to your invitation. Congratulations!"
+        })
+        .then(function(response) {
+          console.log("Email sent successfully!", response.status, response.text);
+        }, function(error) {
+          console.error("Failed to send email:", error);
+        });
       });
 
       // Function to spawn animated hearts
@@ -180,7 +184,7 @@
         }
       }
 
-      // Check if an answer is already saved; if yes, show the message and notification immediately
+      // If an answer is already stored, immediately show the message and hearts
       const savedAnswer = localStorage.getItem('leslyAnswer');
       if (savedAnswer === 'yes') {
         responseStatus.innerText = "✅ Lesly already said YES! 💘";
@@ -188,11 +192,11 @@
         noBtn.style.display = 'none';
         message.style.display = 'block';
         spawnHearts();
-        notification.style.display = 'block';
-        notification.innerText = 'Notification: Answer received, Lesly said YES! 💌';
       }
     });
   </script>
 </body>
 </html>
+
+
 
