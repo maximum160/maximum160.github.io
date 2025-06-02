@@ -10,11 +10,11 @@
       font-family: 'Comic Sans MS', cursive, sans-serif;
       background: linear-gradient(135deg, #ffdee9, #b5fffc);
       height: 100vh;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
       text-align: center;
     }
 
@@ -22,6 +22,7 @@
       font-size: 2em;
       color: #d63384;
       animation: fadeIn 2s ease-in-out;
+      max-width: 90%;
     }
 
     .btn {
@@ -32,6 +33,8 @@
       cursor: pointer;
       transition: transform 0.3s ease, background-color 0.3s ease;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
     }
 
     .btn:hover {
@@ -42,7 +45,6 @@
       background-color: #28a745;
       color: white;
       margin-top: 30px;
-      z-index: 1;
     }
 
     .no {
@@ -60,11 +62,48 @@
       color: #20c997;
       animation: fadeIn 1s ease-in-out;
       display: none;
+      z-index: 2;
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background: url('https://twemoji.maxcdn.com/v/latest/72x72/2764.png') no-repeat center/contain;
+      animation: floatUp 4s ease-in infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px) scale(1.5);
+        opacity: 0;
+      }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+
+    .response-status {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #6c757d;
     }
   </style>
 </head>
@@ -72,29 +111,60 @@
 
   <h1>Hey Lesly! 💕<br>Will you go on a date with me this Saturday or Sunday?</h1>
 
-  <button class="btn yes" id="yesBtn" onclick="sayYes()">Yes 🥰</button>
+  <button class="btn yes" id="yesBtn">Yes 🥰</button>
   <button class="btn no" id="noBtn">I can't 😔</button>
 
   <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
+  <div class="response-status" id="responseStatus"></div>
+  <div class="hearts" id="heartsContainer"></div>
 
   <script>
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
     const message = document.getElementById('message');
+    const heartsContainer = document.getElementById('heartsContainer');
+    const responseStatus = document.getElementById('responseStatus');
 
-    noBtn.addEventListener('mouseover', () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      noBtn.style.left = ${x}px;
-      noBtn.style.top = ${y}px;
+    function moveButtonRandomly(btn) {
+      const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+      btn.style.left = ${x}px;
+      btn.style.top = ${y}px;
+    }
+
+    noBtn.addEventListener('mouseover', () => moveButtonRandomly(noBtn));
+    noBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      moveButtonRandomly(noBtn);
     });
 
-    function sayYes() {
-      // Скрыть кнопки
+    yesBtn.addEventListener('click', () => {
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
-      // Показать сообщение
       message.style.display = 'block';
+      localStorage.setItem('leslyAnswer', 'yes');
+      spawnHearts();
+    });
+
+    function spawnHearts() {
+      for (let i = 0; i < 30; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '100%';
+        heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        heartsContainer.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+
+    // Check saved answer const savedAnswer = localStorage.getItem('leslyAnswer');
+    if (savedAnswer === 'yes') {
+      responseStatus.innerText = "✅ Lesly already said YES! 💘";
+      yesBtn.style.display = 'none';
+      noBtn.style.display = 'none';
+      message.style.display = 'block';
+      spawnHearts();
     }
   </script>
 
