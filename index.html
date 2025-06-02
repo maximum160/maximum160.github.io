@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>Hey Lesly 💌</title>
@@ -109,12 +109,12 @@
 </head>
 <body>
 
-  <h1>Hey Lesly! 💕<br>Will you go on a date with me this Saturday or Sunday?</h1>
+  <h1>Hey Lesly! 💕<br>Ты пойдешь со мной на свидание в субботу или воскресенье?</h1>
 
-  <button class="btn yes" id="yesBtn">Yes 🥰</button>
-  <button class="btn no" id="noBtn">I can't 😔</button>
+  <button class="btn yes" id="yesBtn">Да 🥰</button>
+  <button class="btn no" id="noBtn">Я не могу 😔</button>
 
-  <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
+  <div class="message" id="message">УРА!!! 💖 Я не могу дождаться встречи!</div>
   <div class="response-status" id="responseStatus"></div>
   <div class="hearts" id="heartsContainer"></div>
 
@@ -128,8 +128,8 @@
     function moveButtonRandomly(btn) {
       const x = Math.random() * (window.innerWidth - btn.offsetWidth);
       const y = Math.random() * (window.innerHeight - btn.offsetHeight);
-      btn.style.left = ${x}px;
-      btn.style.top = ${y}px;
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
     }
 
     noBtn.addEventListener('mouseover', () => moveButtonRandomly(noBtn));
@@ -158,9 +158,9 @@
       }
     }
 
-    // Check saved answer const savedAnswer = localStorage.getItem('leslyAnswer');
+    const savedAnswer = localStorage.getItem('leslyAnswer');
     if (savedAnswer === 'yes') {
-      responseStatus.innerText = "✅ Lesly already said YES! 💘";
+      responseStatus.innerText = "✅ Lesly уже сказала ДА! 💘";
       yesBtn.style.display = 'none';
       noBtn.style.display = 'none';
       message.style.display = 'block';
