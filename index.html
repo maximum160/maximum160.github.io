@@ -64,6 +64,22 @@
       display: none;
       z-index: 2;
     }
+    
+    .response-status {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #6c757d;
+      z-index: 2;
+    }
+    
+    .notification {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #007bff;
+      animation: fadeIn 1s ease-in-out;
+      display: none;
+      z-index: 2;
+    }
 
     .hearts {
       position: absolute;
@@ -99,12 +115,6 @@
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
-    .response-status {
-      margin-top: 20px;
-      font-size: 1.1em;
-      color: #6c757d;
-    }
   </style>
 </head>
 <body>
@@ -115,6 +125,7 @@
 
   <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
   <div class="response-status" id="responseStatus"></div>
+  <div class="notification" id="notification"></div>
   <div class="hearts" id="heartsContainer"></div>
 
   <script>
@@ -124,6 +135,7 @@
       const message = document.getElementById('message');
       const heartsContainer = document.getElementById('heartsContainer');
       const responseStatus = document.getElementById('responseStatus');
+      const notification = document.getElementById('notification');
 
       // Function to move a button to a random position
       function moveButtonRandomly(btn) {
@@ -147,6 +159,12 @@
         // Save answer to localStorage to persist the state on reload
         localStorage.setItem('leslyAnswer', 'yes');
         spawnHearts();
+
+        // Simulate sending a reply (notification) to the sender after a short delay
+        setTimeout(() => {
+          notification.style.display = 'block';
+          notification.innerText = 'Notification: Answer received, Lesly said YES! 💌';
+        }, 1000);
       });
 
       // Function to spawn animated hearts
@@ -162,7 +180,7 @@
         }
       }
 
-      // Check if an answer is already saved; if yes, show the message and animation immediately
+      // Check if an answer is already saved; if yes, show the message and notification immediately
       const savedAnswer = localStorage.getItem('leslyAnswer');
       if (savedAnswer === 'yes') {
         responseStatus.innerText = "✅ Lesly already said YES! 💘";
@@ -170,6 +188,8 @@
         noBtn.style.display = 'none';
         message.style.display = 'block';
         spawnHearts();
+        notification.style.display = 'block';
+        notification.innerText = 'Notification: Answer received, Lesly said YES! 💌';
       }
     });
   </script>
