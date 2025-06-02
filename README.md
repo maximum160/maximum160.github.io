@@ -1,97 +1,95 @@
-# maximum160.github.io
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Little Break for Leslie</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #d4f1d4, #a3d9ff);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #333;
-        }
-        .container {
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-        }
-        h1 {
-            font-size: 28px;
-            color: #2e7d32;
-        }
-        p {
-            font-size: 18px;
-            line-height: 1.5;
-        }
-        .buttons {
-            margin: 20px 0;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        #yes-btn {
-            background: #4caf50;
-            color: white;
-        }
-        #yes-btn:hover {
-            background: #388e3c;
-        }
-        #maybe-btn {
-            background: #ffca28;
-            color: #333;
-        }
-        #maybe-btn:hover {
-            background: #ffb300;
-        }
-        #response {
-            margin-top: 20px;
-            font-size: 16px;
-            color: #d81b60;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Hey Lesly 💌</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #d63384;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .btn {
+      padding: 15px 40px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .yes {
+      background-color: #28a745;
+      color: white;
+      margin-top: 30px;
+      z-index: 1;
+    }
+
+    .no {
+      background-color: #dc3545;
+      color: white;
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .message {
+      margin-top: 40px;
+      font-size: 1.6em;
+      color: #20c997;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hey Leslie!</h1>
-        <p>I know you're super busy with finals, so I made this little page to brighten your day! 😊</p>
-        <p>We talked about grabbing snacks and walking by the Waterfront or a park. When you get a break, would you be up for a chill hangout on Saturday or Sunday?</p>
-        <div class="buttons">
-            <button id="yes-btn" onclick="showResponse('yes')">Yes, sounds fun!</button>
-            <button id="maybe-btn" onclick="showResponse('maybe')">Maybe later, finals are crazy!</button>
-        </div>
-        <div id="response"></div>
-        <footer>Good luck crushing those exams! — [Your Name]</footer>
-    </div>
 
-    <script>
-        function showResponse(choice) {
-            const responseDiv = document.getElementById('response');
-            if (choice === 'yes') {
-                responseDiv.innerHTML = 'Awesome! I’ll text you to confirm Saturday or Sunday. 😄';
-            } else {
-                responseDiv.innerHTML = 'No worries at all, focus on those finals! Let me know when you’re free. 🍀';
-            }
-        }
-    </script>
+  <h1>Hey Lesly! 💕<br>Will you go on a date with me this Saturday or Sunday?</h1>
+
+  <button class="btn yes" onclick="sayYes()">Yes 🥰</button>
+  <button class="btn no" id="noBtn">No 🙈</button>
+
+  <div class="message" id="message"></div>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+
+    noBtn.addEventListener('mouseover', () => {
+      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+      noBtn.style.left = ${x}px;
+      noBtn.style.top = ${y}px;
+    });
+
+    function sayYes() {
+      document.getElementById('message').textContent = "YAY!!! 💖 I can't wait to see you!";
+    }
+  </script>
+
 </body>
 </html>
