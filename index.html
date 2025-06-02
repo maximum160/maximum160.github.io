@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Hey Lesly 💌</title>
@@ -108,12 +108,12 @@
   </style>
 </head>
 <body>
-  <h1>Hey Lesly! 💕<br>Ты пойдешь со мной на свидание в субботу или воскресенье?</h1>
+  <h1>Hey Lesly! 💕<br>Will you go out on a date with me this Saturday or Sunday?</h1>
 
-  <button class="btn yes" id="yesBtn">Да 🥰</button>
-  <button class="btn no" id="noBtn">Я не могу 😔</button>
+  <button class="btn yes" id="yesBtn">Yes 🥰</button>
+  <button class="btn no" id="noBtn">I can't 😔</button>
 
-  <div class="message" id="message">УРА!!! 💖 Я не могу дождаться встречи!</div>
+  <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
   <div class="response-status" id="responseStatus"></div>
   <div class="hearts" id="heartsContainer"></div>
 
@@ -125,7 +125,7 @@
       const heartsContainer = document.getElementById('heartsContainer');
       const responseStatus = document.getElementById('responseStatus');
 
-      // Функция перемещения элемента на случайную позицию
+      // Function to move a button to a random position
       function moveButtonRandomly(btn) {
         const x = Math.random() * (window.innerWidth - btn.offsetWidth);
         const y = Math.random() * (window.innerHeight - btn.offsetHeight);
@@ -140,16 +140,16 @@
       });
 
       yesBtn.addEventListener('click', () => {
-        // Скрываем кнопки и показываем сообщение
+        // Hide buttons and show the message when "Yes" is clicked
         yesBtn.style.display = 'none';
         noBtn.style.display = 'none';
         message.style.display = 'block';
-        // Сохраняем в localStorage, чтобы при перезагрузке сразу показывать сообщение
+        // Save answer to localStorage to persist the state on reload
         localStorage.setItem('leslyAnswer', 'yes');
         spawnHearts();
       });
 
-      // Функция создания анимированных сердечек
+      // Function to spawn animated hearts
       function spawnHearts() {
         for (let i = 0; i < 30; i++) {
           const heart = document.createElement('div');
@@ -162,10 +162,10 @@
         }
       }
 
-      // Если ответ уже сохранён, сразу показываем сообщение и анимацию
+      // Check if an answer is already saved; if yes, show the message and animation immediately
       const savedAnswer = localStorage.getItem('leslyAnswer');
       if (savedAnswer === 'yes') {
-        responseStatus.innerText = "✅ Lesly уже сказала ДА! 💘";
+        responseStatus.innerText = "✅ Lesly already said YES! 💘";
         yesBtn.style.display = 'none';
         noBtn.style.display = 'none';
         message.style.display = 'block';
@@ -173,8 +173,11 @@
       }
     });
   </script>
-
 </body>
 </html>
 
+
+
+</body>
+</html>
 
