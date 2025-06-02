@@ -65,13 +65,6 @@
       z-index: 2;
     }
 
-    .response-status {
-      margin-top: 20px;
-      font-size: 1.1em;
-      color: #6c757d;
-      z-index: 2;
-    }
-
     .hearts {
       position: absolute;
       top: 0;
@@ -104,18 +97,15 @@
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
-      to   { opacity: 1; transform: translateY(0); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .response-status {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #6c757d;
     }
   </style>
-
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
-  <script>
-    // Initialize EmailJS with your Public Key
-    (function(){
-      emailjs.init("ldWRO8pGe5kNCena");
-    })();
-  </script>
 </head>
 <body>
   <h1>Hey Lesly! 💕<br>Will you go out on a date with me this Saturday or Sunday?</h1>
@@ -128,14 +118,14 @@
   <div class="hearts" id="heartsContainer"></div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", function () {
       const noBtn = document.getElementById('noBtn');
       const yesBtn = document.getElementById('yesBtn');
       const message = document.getElementById('message');
       const heartsContainer = document.getElementById('heartsContainer');
       const responseStatus = document.getElementById('responseStatus');
 
-      // Move the "No" button to a random position
+      // Function to move a button to a random position
       function moveButtonRandomly(btn) {
         const x = Math.random() * (window.innerWidth - btn.offsetWidth);
         const y = Math.random() * (window.innerHeight - btn.offsetHeight);
@@ -144,44 +134,26 @@
       }
 
       noBtn.addEventListener('mouseover', () => moveButtonRandomly(noBtn));
-      noBtn.addEventListener('click', e => {
+      noBtn.addEventListener('click', (e) => {
         e.preventDefault();
         moveButtonRandomly(noBtn);
       });
 
       yesBtn.addEventListener('click', () => {
-        // Hide buttons, show the message, and spawn hearts
+        // Hide buttons and show the message when "Yes" is clicked
         yesBtn.style.display = 'none';
         noBtn.style.display = 'none';
         message.style.display = 'block';
+        // Save answer to localStorage to persist the state on reload
         localStorage.setItem('leslyAnswer', 'yes');
         spawnHearts();
-
-        // Send email via EmailJS
-        emailjs.send(
-          'service_aq67lhj',     // Your Service ID
-          'template_s3otcoa',    // Your Template ID
-          {
-            to_email: 'maximus942479@icloud.com',
-            subject:  'Lesly Accepted Your Invite!',
-            message:  'Lesly said YES to your invitation. 😊'
-          }
-        )
-        .then(res => {
-          console.log('Email sent successfully!', res.status, res.text);
-          responseStatus.innerText = '✅ Invite email sent!';
-        })
-        .catch(err => {
-          console.error('Email sending error:', err);
-          responseStatus.innerText = '⚠️ Failed to send email.';
-        });
       });
 
-      // Create floating hearts
+      // Function to spawn animated hearts
       function spawnHearts() {
         for (let i = 0; i < 30; i++) {
           const heart = document.createElement('div');
-          heart.className = 'heart';
+          heart.classList.add('heart');
           heart.style.left = Math.random() * 100 + 'vw';
           heart.style.top = '100%';
           heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
@@ -190,8 +162,9 @@
         }
       }
 
-      // Persisted “Yes” state
-      if (localStorage.getItem('leslyAnswer') === 'yes') {
+      // Check if an answer is already saved; if yes, show the message and animation immediately
+      const savedAnswer = localStorage.getItem('leslyAnswer');
+      if (savedAnswer === 'yes') {
         responseStatus.innerText = "✅ Lesly already said YES! 💘";
         yesBtn.style.display = 'none';
         noBtn.style.display = 'none';
