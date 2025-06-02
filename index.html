@@ -56,9 +56,10 @@
 
     .message {
       margin-top: 40px;
-      font-size: 1.6em;
+      font-size: 1.8em;
       color: #20c997;
       animation: fadeIn 1s ease-in-out;
+      display: none;
     }
 
     @keyframes fadeIn {
@@ -71,13 +72,15 @@
 
   <h1>Hey Lesly! 💕<br>Will you go on a date with me this Saturday or Sunday?</h1>
 
-  <button class="btn yes" onclick="sayYes()">Yes 🥰</button>
+  <button class="btn yes" id="yesBtn" onclick="sayYes()">Yes 🥰</button>
   <button class="btn no" id="noBtn">I can't 😔</button>
 
-  <div class="message" id="message"></div>
+  <div class="message" id="message">YAY!!! 💖 I can't wait to see you!</div>
 
   <script>
     const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const message = document.getElementById('message');
 
     noBtn.addEventListener('mouseover', () => {
       const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
@@ -87,7 +90,11 @@
     });
 
     function sayYes() {
-      document.getElementById('message').textContent = "YAY!!! 💖 I can't wait to see you!";
+      // Скрыть кнопки
+      yesBtn.style.display = 'none';
+      noBtn.style.display = 'none';
+      // Показать сообщение
+      message.style.display = 'block';
     }
   </script>
 
